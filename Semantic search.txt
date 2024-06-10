@@ -13,9 +13,8 @@ ALGORITHM :
 
 PROGRAM:
 
-from sklearn.metrics.pairwise import cosine_similarity
+import math
 
-# Sample content embeddings (already trained)
 content_embeddings = {
     'space exploration': [0.8, -0.3, 0.6],
     'astronomy': [0.7, -0.2, 0.8],
@@ -23,18 +22,23 @@ content_embeddings = {
 }
 
 user_interests = ['space exploration', 'cosmic discoveries']
-user_embedding = [0.75, -0.25, 0.7]  # Generated using the same embedding method
+user_embedding = [0.75, -0.25, 0.7]  
+
+def cosine_similarity_manual(vec1, vec2):
+    dot_product = sum(a * b for a, b in zip(vec1, vec2))
+    norm_vec1 = math.sqrt(sum(a * a for a in vec1))
+    norm_vec2 = math.sqrt(sum(b * b for b in vec2))
+    return dot_product / (norm_vec1 * norm_vec2)
 
 related_content = []
 for content, embedding in content_embeddings.items():
-    similarity = cosine_similarity([user_embedding], [embedding])[0][0]
+    similarity = cosine_similarity_manual(user_embedding, embedding)
     related_content.append((content, similarity))
 
 related_content.sort(key=lambda x: x[1], reverse=True)
 suggested_content = [content for content, _ in related_content]
 
 print("Suggested content:", suggested_content)
-
 OUTPUT:
 
 Suggested content: ['astronomy', 'space exploration', 'rocket technology']
