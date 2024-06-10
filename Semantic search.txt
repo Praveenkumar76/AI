@@ -39,6 +39,7 @@ related_content.sort(key=lambda x: x[1], reverse=True)
 suggested_content = [content for content, _ in related_content]
 
 print("Suggested content:", suggested_content)
+
 OUTPUT:
 
 Suggested content: ['astronomy', 'space exploration', 'rocket technology']
